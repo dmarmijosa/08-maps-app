@@ -35,7 +35,7 @@ mapboxgl.accessToken = environment.mapBoxKey;
     }
   `,
 })
-export class FullscreenMapPageComponent implements AfterViewInit {
+export class FullscreenMapPageComponent {
   divElemnt = viewChild<ElementRef>('map');
   map = signal<mapboxgl.Map | null>(null);
 
@@ -52,7 +52,8 @@ export class FullscreenMapPageComponent implements AfterViewInit {
 
     onCleanup(() => {});
   });
-  ngAfterViewInit() {
+  async ngAfterViewInit() {
+    await new Promise((resolve)=> setTimeout(resolve, 80));
     if (!this.divElemnt()?.nativeElement) return;
     const element = this.divElemnt()?.nativeElement;
     const { lat, lng } = this.coordinates();
