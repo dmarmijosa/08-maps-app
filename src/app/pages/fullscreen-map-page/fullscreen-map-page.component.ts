@@ -76,6 +76,10 @@ export class FullscreenMapPageComponent implements AfterViewInit {
       // console.log(center)
       this.coordinates.set(center);
     });
+
+    map.addControl(new mapboxgl.FullscreenControl());
+    map.addControl(new mapboxgl.NavigationControl());
+    map.addControl(new mapboxgl.ScaleControl());
     this.map.set(map);
   }
 }
