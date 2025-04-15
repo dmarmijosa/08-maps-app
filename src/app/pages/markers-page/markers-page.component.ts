@@ -114,5 +114,6 @@ export class MarkersPageComponent {
     this.markers.update((prev) =>
       prev.filter((markerPrev) => markerPrev !== marker)
     );
+    this.markerService.setMarketCache(this.markers());
   }
 }
