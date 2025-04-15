@@ -6,7 +6,7 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "set-envs":"node ./scripts/set-envs.js",
+    "set-envs": "node ./scripts/set-envs.js",
     "test": "ng test"
   },
   "private": true,
@@ -19,6 +19,7 @@
     "@angular/platform-browser-dynamic": "^19.2.0",
     "@angular/router": "^19.2.0",
     "@tailwindcss/postcss": "^4.1.4",
+    "mapbox-gl": "^3.11.0",
     "postcss": "^8.5.3",
     "rxjs": "~7.8.0",
     "tailwindcss": "^4.1.4",
