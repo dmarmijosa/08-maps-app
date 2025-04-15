@@ -1,4 +1,4 @@
-import { DecimalPipe } from '@angular/common';
+import { DecimalPipe, JsonPipe } from '@angular/common';
 import {
   AfterViewInit,
   Component,
@@ -13,7 +13,7 @@ import mapboxgl from 'mapbox-gl'; // or "const mapboxgl = require('mapbox-gl');"
 mapboxgl.accessToken = environment.mapBoxKey;
 @Component({
   selector: 'app-fullscreen-map-page',
-  imports: [DecimalPipe],
+  imports: [DecimalPipe, JsonPipe],
   templateUrl: './fullscreen-map-page.component.html',
   styles: `
     div{
@@ -39,7 +39,12 @@ export class FullscreenMapPageComponent implements AfterViewInit {
   divElemnt = viewChild<ElementRef>('map');
   map = signal<mapboxgl.Map | null>(null);
 
-  zoom = signal(14);
+  zoom = signal(10);
+
+  coordinates = signal({
+    lng: -74.5,
+    lat: 40,
+  });
 
   zoomEfect = effect((onCleanup) => {
     if (!this.map) return;
@@ -50,10 +55,11 @@ export class FullscreenMapPageComponent implements AfterViewInit {
   ngAfterViewInit() {
     if (!this.divElemnt()?.nativeElement) return;
     const element = this.divElemnt()?.nativeElement;
+    const { lat, lng } = this.coordinates();
     const map = new mapboxgl.Map({
       container: element, // container ID
       style: 'mapbox://styles/mapbox/streets-v12', // style URL
-      center: [-74.5, 40], // starting position [lng, lat]
+      center: [lng, lat], // starting position [lng, lat]
       zoom: this.zoom(), // starting zoom
     });
     this.mapListener(map);
@@ -65,6 +71,11 @@ export class FullscreenMapPageComponent implements AfterViewInit {
       this.zoom.set(newZoom);
     });
 
+    map.on('moveend', () => {
+      const center = map.getCenter();
+      // console.log(center)
+      this.coordinates.set(center);
+    });
     this.map.set(map);
   }
 }
