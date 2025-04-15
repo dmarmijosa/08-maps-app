@@ -3,7 +3,11 @@
   <h2 class="text-xl font-bold text-black mb-2">Marcadores</h2>
   <div class="flex flex-col gap-2">
     @for (marker of markers(); track marker.id) {
-    <div class="form-control">
+    <div
+      class="form-control"
+      (click)="flyToMarker(marker.mapBoxMarker._lngLat)"
+      (dblclick)="deleteMarker(marker)"
+    >
       <label for="" class="label flex cursor-pointer">
         <span class="flex-1 text-black text-xs">{{
           marker.mapBoxMarker.getLngLat() | json | coord
@@ -12,9 +16,8 @@
           type="radio"
           name="radio-4"
           class="radio"
-          [style]="{backgroundColor: marker.mapBoxMarker._color}"
+          [style]="{ backgroundColor: marker.mapBoxMarker._color }"
           checked="checked"
-          (click)="flyToMarker(marker.mapBoxMarker._lngLat)"
         />
       </label>
     </div>

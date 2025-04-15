@@ -102,6 +102,17 @@ export class MarkersPageComponent {
 
     this.map()?.flyTo({
       center: lngLat,
+      zoom: 14,
     });
+  }
+  deleteMarker(marker: Marker) {
+    if (!this.map()) return;
+
+    const map = this.map();
+    marker.mapBoxMarker.remove();
+
+    this.markers.update((prev) =>
+      prev.filter((markerPrev) => markerPrev !== marker)
+    );
   }
 }
